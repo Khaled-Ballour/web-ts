@@ -10,10 +10,8 @@ export interface UserProps {
   age?: number;
 }
 
-const rootUrl = "http://localhost:3000/users/";
-
 export class User extends Model<UserProps> {
-  static buildUser(attrs: UserProps): User {
+  static buildUser(attrs: UserProps, rootUrl: string): User {
     return new User(
       new Attributes(attrs),
       new ApiSync(rootUrl),
@@ -21,9 +19,9 @@ export class User extends Model<UserProps> {
     );
   }
 
-  static buildUserCollection(): Collection<User, UserProps> {
+  static buildUserCollection(rootUrl: string): Collection<User, UserProps> {
     return new Collection<User, UserProps>(rootUrl, (json: UserProps) =>
-      User.buildUser(json)
+      User.buildUser(json, rootUrl)
     );
   }
 
