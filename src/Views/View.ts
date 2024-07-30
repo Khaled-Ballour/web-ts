@@ -1,12 +1,20 @@
 import { Model, HasID } from "../models/Model";
 
 export abstract class View<T extends Model<K>, K extends HasID> {
-  abstract parent: HTMLElement;
-  abstract template(): string;
-  abstract eventMap(): { [key: string]: () => void };
+  regions: { [key: string]: Element } = {};
 
-  constructor(protected model: T) {
+  constructor(protected parent: HTMLElement, protected model: T) {
     this.bindModel();
+  }
+
+  abstract template(): string;
+
+  eventMap(): { [key: string]: () => void } {
+    return {};
+  }
+
+  regionsMap(): { [key: string]: string } {
+    return {};
   }
 
   bindModel(): void {
@@ -23,11 +31,21 @@ export abstract class View<T extends Model<K>, K extends HasID> {
     }
   }
 
+  mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap();
+    for (let regionKey in regionsMap) {
+      const selector = regionsMap[regionKey];
+      const element = fragment.querySelector(selector);
+      if (element) this.regions[regionKey] = element;
+    }
+  }
+
   render(): void {
     this.parent.innerHTML = "";
     const templateElement = document.createElement("template");
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
+    this.mapRegions(templateElement.content);
     this.parent.append(templateElement.content);
   }
 }

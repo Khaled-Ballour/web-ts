@@ -3,13 +3,14 @@ import { View } from "./View";
 
 export class UserForm extends View<User, UserProps> {
   constructor(public parent: HTMLElement, public user: User) {
-    super(user);
+    super(parent, user);
   }
 
   eventMap(): { [key: string]: () => void } {
     return {
       "click:.set-age": this.onSetAgeClick,
       "click:.change-name": this.onSetNameClick,
+      "click:.save-model": this.onSaveClick,
     };
   }
 
@@ -22,15 +23,17 @@ export class UserForm extends View<User, UserProps> {
     if (name) this.model.set({ name });
   }
 
+  onSaveClick(): void {
+    this.model.save();
+  }
+
   template(): string {
     return `
       <div>
-        <h1>User Form</h1>
-        <div>User name: ${this.model.get("name")}</div>
-        <div>User age: ${this.model.get("age")}</div>
-        <input />
+        <input placeholder="${this.model.get("name")}" />
         <button class="change-name">Change name</button>
         <button class="set-age">Set random age</button>
+        <button class="save-model"> Sava </button> 
       </div>
     `;
   }
