@@ -5,11 +5,12 @@ const user = User.buildUser(
   { name: "NAME", age: 40 },
   "http://localhost:3000/users"
 );
-user.on("change", () => {
-  console.log(user.get("age"));
-});
-const userForm = new UserForm(
-  document.getElementById("root") as HTMLElement,
-  user
-);
-userForm.render();
+
+const root = document.getElementById("root");
+
+if (root) {
+  const userForm = new UserForm(root, user);
+  userForm.render();
+} else {
+  throw new Error("Root Element not found");
+}

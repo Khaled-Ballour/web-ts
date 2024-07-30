@@ -2,11 +2,13 @@
   "scripts": {
     "start:parcel": "npx parcel index.html",
     "start:db": "json-server -w db.json",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "ts:config": "tsc --init"
   },
   "dependencies": {
     "axios": "^1.7.2",
-    "json-server": "^0.17.4"
+    "json-server": "^0.17.4",
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
     "buffer": "^6.0.3"
