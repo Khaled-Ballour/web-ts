@@ -1,12 +1,15 @@
 import { User } from "./models/User";
 import { UserForm } from "./Views/UserForm";
 
-const userForm = new UserForm(document.getElementById("root") as HTMLElement);
-userForm.render();
-
-const userCollection = User.buildUserCollection("http://localhost:3000/users");
-userCollection.on("change", () => {
-  console.log(userCollection.models);
+const user = User.buildUser(
+  { name: "NAME", age: 40 },
+  "http://localhost:3000/users"
+);
+user.on("change", () => {
+  console.log(user.get("age"));
 });
-
-userCollection.fetch();
+const userForm = new UserForm(
+  document.getElementById("root") as HTMLElement,
+  user
+);
+userForm.render();

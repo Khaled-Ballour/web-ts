@@ -28,4 +28,9 @@ export class User extends Model<UserProps> {
   isAdminUser(): boolean {
     return this.get("id") === 1;
   }
+
+  setRandomAge(): void {
+    const randomAge = Math.trunc(Math.random() * 100) + 1;
+    this.set({ age: randomAge });
+  }
 }
