@@ -1,4 +1,4 @@
-import { Eventing } from "./models/Eventing";
+import { Eventing } from "./Eventing";
 import axios, { AxiosResponse } from "axios";
 
 export class Collection<T, R> {

@@ -2,7 +2,7 @@ import { Model } from "../Model";
 import { Attributes } from "./Attributes";
 import { ApiSync } from "./ApiSync";
 import { Eventing } from "./Eventing";
-import { Collection } from "../Collection";
+import { Collection } from "./Collection";
 
 export interface UserProps {
   id?: number;
