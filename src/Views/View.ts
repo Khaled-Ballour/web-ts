@@ -3,16 +3,18 @@ import { Model, HasID } from "../models/Model";
 export abstract class View<T extends Model<K>, K extends HasID> {
   regions: { [key: string]: Element } = {};
 
-  constructor(protected parent: HTMLElement, protected model: T) {
+  constructor(protected parent: Element, protected model: T) {
     this.bindModel();
   }
 
   abstract template(): string;
 
+  // To be overrid
   eventMap(): { [key: string]: () => void } {
     return {};
   }
 
+  // To be overrid
   regionsMap(): { [key: string]: string } {
     return {};
   }
@@ -40,12 +42,16 @@ export abstract class View<T extends Model<K>, K extends HasID> {
     }
   }
 
+  // to be override
+  onRender(): void {}
+
   render(): void {
     this.parent.innerHTML = "";
     const templateElement = document.createElement("template");
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
     this.mapRegions(templateElement.content);
+    this.onRender();
     this.parent.append(templateElement.content);
   }
 }
